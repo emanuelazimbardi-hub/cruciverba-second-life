@@ -1,0 +1,240 @@
+
+/* COLORI SECOND LIFE */
+
+:root {
+    /* Colori iniziali */
+    --sfondo: #FFFFFF;
+    --verde-base: #DEE7D9;
+    --marrone-base: #4B3026;
+    --testo-base: #19231D;
+
+    /* Selection Casual */
+    --lime: #D0DF00;
+    --lime-scuro: #888D30;
+
+    /* Selection Streetwear */
+    --arancione: #FF8D00;
+    --arancione-scuro: #C86733;
+
+    /* Selection Luxury */
+    --viola: #944E87;
+    --viola-scuro: #682961;
+
+    /* Dimensione caselle */
+    --casella: clamp(20px, 5.8vw, 36px);
+}
+
+/* PAGINA GENERALE */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--sfondo);
+    color: var(--testo-base);
+    font-family: Arial, sans-serif;
+}
+
+.pagina {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px 15px;
+}
+
+/* TITOLO */
+
+.intestazione {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.intestazione h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.intestazione p {
+    font-size: 16px;
+    margin-top: 0;
+}
+
+/* GRIGLIA DEL CRUCIVERBA */
+
+.gioco {
+    display: flex;
+    justify-content: center;
+}
+
+.griglia {
+    display: grid;
+    grid-template-columns: repeat(13, var(--casella));
+    grid-template-rows: repeat(16, var(--casella));
+    margin-bottom: 30px;
+}
+
+/* CASELLE INIZIALI */
+
+.casella {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--verde-base);
+    border: 1px solid var(--marrone-base);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: bold;
+    font-size: calc(var(--casella) * 0.55);
+    color: var(--testo-base);
+}
+
+/* NUMERI DELLE CASELLE */
+
+.numero {
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    font-size: 9px;
+    font-weight: bold;
+}
+
+/* PAROLE RISOLTE - CASUAL */
+
+.casella.risolta-lime {
+    background: var(--lime);
+    border-color: var(--lime-scuro);
+    color: var(--lime-scuro);
+}
+
+/* PAROLE RISOLTE - STREETWEAR */
+
+.casella.risolta-arancione {
+    background: var(--arancione);
+    border-color: var(--arancione-scuro);
+    color: var(--arancione-scuro);
+}
+
+/* PAROLE RISOLTE - LUXURY */
+
+.casella.risolta-viola {
+    background: var(--viola);
+    border-color: var(--viola-scuro);
+    color: var(--viola-scuro);
+}
+
+/* DEFINIZIONI */
+
+.definizioni {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.definizioni h2 {
+    font-size: 17px;
+    text-align: center;
+}
+
+.indizio {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+
+/* MESSAGGI */
+
+#messaggio {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* PULSANTE RICOMINCIA */
+
+#ricomincia {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 25px;
+    background: var(--testo-base);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* VISUALIZZAZIONE SMARTPHONE */
+
+@media (max-width: 600px) {
+    .intestazione h1 {
+        font-size: 20px;
+    }
+
+    .definizioni {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .indizio {
+        font-size: 13px;
+    }
+}
+
+/* SEZIONE AIUTO */
+
+.aiuto {
+    background: #F5F2E9;
+    border: 1px solid #4B3026;
+    border-radius: 12px;
+    padding: 25px;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.aiuto h2 {
+    color: #19231D;
+    font-size: 20px;
+    margin-top: 0;
+}
+
+.aiuto p {
+    color: #4B3026;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+#mostra-aiuto {
+    background: #19231D;
+    color: #FFFFFF;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.lista-aiuto {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.lista-aiuto[hidden] {
+    display: none;
+}
+
+.parola-aiuto {
+    background: #DEE7D9;
+    color: #19231D;
+    border: 1px solid #4B3026;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+}

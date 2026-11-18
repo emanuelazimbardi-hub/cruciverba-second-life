@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cruciverba Second Life</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="pagina">
+
+        <header class="intestazione">
+            <h1>SECOND LIFE in 10 parole:</h1>
+            <p>
+                Le 6 R del riciclo e le 4 dimensioni
+                della sostenibilità
+            </p>
+        </header>
+
+        <!-- Griglia del cruciverba -->
+        <section class="gioco">
+            <div id="griglia" class="griglia">
+            </div>
+        </section>
+
+        <!-- Definizioni del cruciverba -->
+        <section class="definizioni">
+
+            <div>
+                <h2>ORIZZONTALE</h2>
+                <div id="indizi-orizzontali"></div>
+            </div>
+
+            <div>
+                <h2>VERTICALE</h2>
+                <div id="indizi-verticali"></div>
+            </div>
+
+        </section>
+
+<!-- Inserimento della risposta -->
+<section class="area-risposta">
+
+    <h2>Risolvi il cruciverba</h2>
+
+    <p id="parola-selezionata">
+        Seleziona una definizione per iniziare.
+    </p>
+
+    <input
+        type="text"
+        id="risposta"
+        placeholder="Scrivi qui la risposta"
+        autocomplete="off"
+    >
+
+    <button id="verifica" type="button">
+        Verifica risposta
+    </button>
+
+</section>
+        <!-- Messaggi del gioco -->
+
+<!-- AIUTO FACOLTATIVO -->
+
+<section class="aiuto">
+
+    <h2>Hai bisogno di un piccolo aiuto?</h2>
+
+    <p>
+        Se non riesci a trovare una risposta,
+        puoi consultare le parole disponibili!
+    </p>
+
+    <button
+        id="mostra-aiuto"
+        type="button"
+        aria-expanded="false"
+        aria-controls="lista-aiuto">
+        Mostra le parole disponibili
+    </button>
+
+    <div id="lista-aiuto" class="lista-aiuto" hidden>
+    </div>
+
+</section>
+
+        <p id="messaggio" role="status"></p>
+
+        <button id="ricomincia" type="button">
+            Ricomincia
+        </button>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
