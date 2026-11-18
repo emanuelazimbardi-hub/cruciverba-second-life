@@ -49,9 +49,17 @@
 
     <h2>Risolvi il cruciverba</h2>
 
+<p>
+    Tocca una casella del cruciverba
+    oppure seleziona una definizione
+    per inserire la risposta.
+</p>
+
     <p id="parola-selezionata">
         Seleziona una definizione per iniziare.
     </p>
+
+<div class="riga-risposta">
 
     <input
         type="text"
@@ -63,6 +71,10 @@
     <button id="verifica" type="button">
         Verifica risposta
     </button>
+
+    <p id="messaggio" role="status"></p>
+
+</div>
 
 </section>
         <!-- Messaggi del gioco -->
@@ -91,7 +103,6 @@
 
 </section>
 
-        <p id="messaggio" role="status"></p>
 
         <button id="ricomincia" type="button">
             Ricomincia

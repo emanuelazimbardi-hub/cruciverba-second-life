@@ -218,6 +218,7 @@ const incrociFinali = {
 /* AGGIORNAMENTO DELLA GRIGLIA */
 
 function aggiornaGriglia() {
+    aggiornaAiuto();
     const contenuti = new Map();
 
     parole.forEach(parola => {
@@ -285,7 +286,7 @@ pulsanteVerifica.addEventListener("click", () => {
             "Seleziona prima una definizione.";
         return;
     }
-
+    const parolaVerificata = parolaSelezionata;
     const risposta = campoRisposta.value
         .trim()
         .toUpperCase()
@@ -295,6 +296,7 @@ pulsanteVerifica.addEventListener("click", () => {
         paroleRisolte.add(parolaSelezionata.numero);
 
         aggiornaGriglia();
+        aggiornaAiuto();
 
         messaggio.textContent =
             "Risposta corretta! La parola si è colorata.";
@@ -312,7 +314,10 @@ pulsanteVerifica.addEventListener("click", () => {
     } else {
         messaggio.textContent =
             "Risposta non corretta. Riprova!";
-    }
+    }    mostraRisultatoSullaGriglia(
+        parolaVerificata,
+        risposta === parolaVerificata.risposta
+    );
 });
 
 /* INVIO DALLA TASTIERA */
@@ -383,3 +388,195 @@ pulsanteAiuto.addEventListener("click", () => {
         ? "Mostra le parole disponibili"
         : "Nascondi le parole";
 });
+
+/* AGGIORNA LE PAROLE DELLA SEZIONE AIUTO */
+
+function aggiornaAiuto() {
+
+    const elementi =
+        document.querySelectorAll(".parola-aiuto");
+
+    elementi.forEach(elemento => {
+
+        const parola = parole.find(
+            p => p.risposta === elemento.textContent.trim()
+        );
+
+        if (!parola) return;
+
+        elemento.classList.remove(
+            "aiuto-lime",
+            "aiuto-arancione",
+            "aiuto-viola"
+        );
+
+        if (paroleRisolte.has(parola.numero)) {
+            elemento.classList.add(
+                "aiuto-" + parola.colore
+            );
+        }
+
+    });
+}
+
+/* SELEZIONE DELLE PAROLE DALLA GRIGLIA */
+
+caselle.forEach((casella, posizione) => {
+
+    const paroleCollegate = parole.filter(parola => {
+
+        for (let i = 0; i < parola.risposta.length; i++) {
+
+            const r = parola.riga +
+                (parola.direzione === "V" ? i : 0);
+
+            const c = parola.colonna +
+                (parola.direzione === "O" ? i : 0);
+
+            if (`${r}-${c}` === posizione) {
+                return true;
+            }
+        }
+
+        return false;
+    });
+
+    casella.addEventListener("click", () => {
+
+        const nonRisolte = paroleCollegate.filter(
+            p => !paroleRisolte.has(p.numero)
+        );
+
+        const disponibili = nonRisolte.length
+            ? nonRisolte
+            : paroleCollegate;
+
+        const indice = disponibili.findIndex(
+            p => p.numero === parolaSelezionata?.numero
+        );
+
+        const parola = disponibili[
+            (indice + 1) % disponibili.length
+        ];
+
+        parolaSelezionata = parola;
+
+        testoSelezione.textContent =
+            `${parola.numero}) ${parola.indizio} ` +
+            `(${parola.risposta.length} lettere)`;
+
+        campoRisposta.value = "";
+        messaggio.textContent = "";
+
+        document.querySelector(".area-risposta")
+            .scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+        campoRisposta.focus({
+            preventScroll: true
+        });
+    });
+});
+
+/* RITORNO AUTOMATICO ALLA GRIGLIA */
+
+let timerRisultato;
+let caselleTemporanee = [];
+
+const avvisoGriglia = document.createElement("div");
+
+avvisoGriglia.style.cssText = `
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: none;
+    max-width: 90vw;
+    padding: 12px 18px;
+    background: white;
+    color: #19231D;
+    border: 2px solid #888D30;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 4px 14px #00000030;
+`;
+
+avvisoGriglia.setAttribute("role", "status");
+document.body.appendChild(avvisoGriglia);
+
+function mostraRisultatoSullaGriglia(parola, corretta) {
+
+    clearTimeout(timerRisultato);
+
+    // Elimina eventuali vecchie evidenziazioni rosse
+    caselleTemporanee.forEach(casella => {
+        casella.style.backgroundColor = "";
+        casella.style.borderColor = "";
+    });
+
+    caselleTemporanee = [];
+
+    // Se la risposta è sbagliata, colora di rosso
+    if (!corretta) {
+
+        for (let i = 0; i < parola.risposta.length; i++) {
+
+            const r = parola.riga +
+                (parola.direzione === "V" ? i : 0);
+
+            const c = parola.colonna +
+                (parola.direzione === "O" ? i : 0);
+
+            const casella = caselle.get(`${r}-${c}`);
+
+            if (!casella) continue;
+
+            // Non cambiare i colori delle lettere già risolte
+            const giaRisolta = [
+                "risolta-lime",
+                "risolta-arancione",
+                "risolta-viola"
+            ].some(classe => casella.classList.contains(classe));
+
+            if (giaRisolta) continue;
+
+            casella.style.backgroundColor = "#F5B7B1";
+            casella.style.borderColor = "#C62828";
+
+            caselleTemporanee.push(casella);
+        }
+    }
+
+    // Mostra il messaggio anche nella parte alta
+    avvisoGriglia.textContent = messaggio.textContent;
+
+    avvisoGriglia.style.borderColor =
+        corretta ? "#888D30" : "#C62828";
+
+    avvisoGriglia.style.display = "block";
+
+    // Riporta il giocatore alla griglia
+    campoRisposta.blur();
+
+    griglia.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+    // Dopo 2,5 secondi rimuove il rosso e l'avviso
+    timerRisultato = setTimeout(() => {
+
+        caselleTemporanee.forEach(casella => {
+            casella.style.backgroundColor = "";
+            casella.style.borderColor = "";
+        });
+
+        caselleTemporanee = [];
+        avvisoGriglia.style.display = "none";
+
+    }, 2500);
+}

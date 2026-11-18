@@ -238,3 +238,69 @@ body {
     font-size: 13px;
     font-weight: bold;
 }
+
+/* PAROLE GIA' INDOVINATE NELLA SEZIONE AIUTO */
+
+.parola-aiuto.aiuto-lime,
+.parola-aiuto.aiuto-arancione,
+.parola-aiuto.aiuto-viola {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+}
+
+/* VERDE LIME */
+.parola-aiuto.aiuto-lime {
+    background: var(--lime);
+    color: var(--lime-scuro);
+    text-decoration-color: var(--lime-scuro);
+}
+
+/* ARANCIONE */
+.parola-aiuto.aiuto-arancione {
+    background: var(--arancione);
+    color: var(--arancione-scuro);
+    text-decoration-color: var(--arancione-scuro);
+}
+
+/* VIOLA */
+.parola-aiuto.aiuto-viola {
+    background: var(--viola);
+    color: var(--viola-scuro);
+    text-decoration-color: var(--viola-scuro);
+}
+
+/* CASELLE CLICCABILI */
+
+.casella {
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+/* MESSAGGIO ACCANTO ALLA RISPOSTA */
+
+.riga-risposta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.riga-risposta input {
+    flex: 1 1 180px;
+    min-width: 0;
+}
+
+#messaggio {
+    margin: 0;
+    flex: 1 1 200px;
+    text-align: left;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    #messaggio {
+        flex-basis: 100%;
+    }
+}
